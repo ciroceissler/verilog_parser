@@ -124,8 +124,8 @@ extern "C" DESCRIPTOR* parser_verilog(const char* filename, int &size) {
     // FIXME: args[4] / to_name only one output net?
 
     length = args[4].size() + 1;
-    descr->to_name = new char(length);
-    strncpy(descr->to_name, args[4].c_str(), length);
+    descr->to_name = static_cast<char*>(calloc(length, sizeof(char)));
+    std::memcpy(descr->to_name, args[4].c_str(), length);
 
     descr->level = atoi(args[5].c_str());
 
@@ -148,8 +148,8 @@ extern "C" DESCRIPTOR* parser_verilog(const char* filename, int &size) {
     }
 
     length = args[8].size() + 1;
-    descr->name = new char(length);
-    strncpy(descr->name, args[8].c_str(), length);
+    descr->name = static_cast<char*>(calloc(length, sizeof(char)));
+    std::memcpy(descr->name, args[8].c_str(), length);
 
     if      (args[9] == "FFD")   descr->attr = FFD;
     else if (args[9] == "FFDR")  descr->attr = FFDR;
