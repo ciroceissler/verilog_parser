@@ -19,6 +19,6 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ./verilog_parser <NAME>.v
+$ ln -s ../src/parser.py
+$ ./test <NAME>.v
 ```
-
