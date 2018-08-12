@@ -25,7 +25,7 @@ std::string exec(const std::string cmd) {
   return result;
 }
 
-DESCRIPTOR* parser_verilog(const char* filename, int* size) {
+DESCRIPTOR* create_verilog(const char* filename, int* size) {
   std::vector<DESCRIPTOR*> v_descr;
 
   std::string cmd = "python3 parser.py ";

@@ -56,7 +56,7 @@ typedef struct {
   int gate_id;      /* index to a structure describing library */
 } DESCRIPTOR;
 
-extern "C" DESCRIPTOR* parser_verilog(const char* filename, int* size);
+extern "C" DESCRIPTOR* create_verilog(const char* filename, int* size);
 
 #endif  //  VERILOG_PARSER_H
 

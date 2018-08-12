@@ -2,13 +2,13 @@
 
 #include "data2.h"
 
-extern DESCRIPTOR* parser_verilog(const char* filename, int* size); // TODO: add to data2.h in the future
+extern DESCRIPTOR* create_verilog(const char* filename, int* size); // TODO: add to data2.h in the future
 
 int n_descr;
 DESCRIPTOR *descr;
 
 int main(int argc, char *argv[]) {
-  descr = parser_verilog(argv[1], &n_descr);
+  descr = create_verilog(argv[1], &n_descr);
 
   for (int i = 0; i < n_descr; i++) {
     printf("attr    : %d\n", (int) descr[i].attr);

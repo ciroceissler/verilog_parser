@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
 
   std::string filename = (argc > 1) ? argv[1] : "top.v";
 
-  descr = parser_verilog(filename.c_str(), &size);
+  descr = create_verilog(filename.c_str(), &size);
 
   for (int i = 0; i < size; i++) {
     std::cout << "attr    : " << (int) descr[i].attr << std::endl;
