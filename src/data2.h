@@ -148,6 +148,8 @@ typedef struct
 /* prototype della create() */
 int create (char *name) ;
 
+DESCRIPTOR* create_verilog(const char* filename, int* size);
+
 int	get_descr_pos( char *s) ;
 
 /* global variables */
