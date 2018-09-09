@@ -20,5 +20,5 @@ $ cd build
 $ cmake ..
 $ make
 $ python3 ../src/parser.py <NAME>.v > <NAME>.iff
-$ ./test <NAME>.iff
+$ ./main <NAME>.iff
 ```
