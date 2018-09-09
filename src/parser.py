@@ -40,16 +40,16 @@ class Descriptor:
         print('============')
 
     def show(self):
-        print(self.attr                                           + ';' \
-            + self.type                                           + ';' \
-            + str(self.fanin)                                     + ';' \
-            + str(self.fanout)                                    + ';' \
-            + str(self.to_name[0])                                + ';' \
-            + str(self.level)                                     + ';' \
-            + str(self.to).replace('[', '').replace(']', '')      + ';' \
-            + str(self.fr0m).replace('[', '').replace(']', '')    + ';' \
-            + self.name                                           + ';' \
-            + self.ff_type                                        + ';' \
+        print(self.attr                                           + ';'  \
+            + self.type                                           + ';'  \
+            + str(self.fanin)                                     + ';'  \
+            + str(self.fanout)                                    + ';'  \
+            + str(self.to_name[0])                                + ';'  \
+            + str(self.level)                                     + ';'  \
+            + str(self.to).replace('[', '').replace(']', '')      + ' ;' \
+            + str(self.fr0m).replace('[', '').replace(']', '')    + ' ;' \
+            + self.name                                           + ';'  \
+            + self.ff_type                                        + ';'  \
             + str(self.gate_id))
 
 def gate_id():

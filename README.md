@@ -12,13 +12,13 @@ $ sudo pip install jinja2
 $ sudo pip install pyverilog
 ```
 
-Compile and execute C++ code:
+Compile and execute C code:
 
 ```
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ln -s ../src/parser.py
-$ ./test <NAME>.v
+$ python3 ../src/parser.py <NAME>.v > <NAME>.iff
+$ ./test <NAME>.iff
 ```
