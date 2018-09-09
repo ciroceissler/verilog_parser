@@ -4,13 +4,17 @@
 
 #include "data2.h"
 
-DESCRIPTOR* create_verilog(const char* filename, int* size) {
-  DESCRIPTOR *descr = (DESCRIPTOR*) malloc (sizeof(DESCRIPTOR));
+int n_descr;
+DESCRIPTOR *descr;
+
+void create_verilog(const char* filename) {
   FILE *file = fopen(filename, "r");
+
+  descr = (DESCRIPTOR*) malloc (sizeof(DESCRIPTOR));
 
   char line[256];
 
-  *size = 0;
+  n_descr = 0;
 
   while (fgets(line, sizeof(line), file)) {
     int i;
@@ -19,11 +23,11 @@ DESCRIPTOR* create_verilog(const char* filename, int* size) {
     char *to;
     char *from;
 
-    i = *size;
+    i = n_descr;
 
-    *size = *size + 1;
+    n_descr = n_descr + 1;
 
-    descr = realloc(descr, *size*sizeof(DESCRIPTOR));
+    descr = realloc(descr, n_descr*sizeof(DESCRIPTOR));
 
     // write: descr->attr
     pch = strtok(line, ";");
@@ -142,7 +146,5 @@ DESCRIPTOR* create_verilog(const char* filename, int* size) {
   }
 
   fclose(file);
-
-  return descr;
 }
 
