@@ -40,6 +40,9 @@ class Descriptor:
         print('============')
 
     def show(self):
+        if len(self.to_name) == 0:
+            self.to_name.append("")
+
         print(self.attr                                           + ';'  \
             + self.type                                           + ';'  \
             + str(self.fanin)                                     + ';'  \
@@ -181,36 +184,44 @@ def update_index(descriptors, mod):
             descriptors[i].fr0m[j] = mod[descriptors[i].fr0m[j]]
             j = j + 1
 
-        descriptors[i].show()
-
         i = i + 1
 
-def get_level(descriptors, index):
-    level = 0
-    children = []
+def walk(descriptors, index, level, list):
 
-    if descriptors[index].attr != 'PI':
-        for var in descriptors[index].fr0m:
-            children.append(get_level(descriptors, var))
-            level = max(children) + 1
+    if len(list) > 0:
+        if index in list:
+            return 1
 
-    return level
+    list.append(index)
+
+    for var in descriptors[index].to:
+        if level > descriptors[var].level:
+            descriptors[var].level = level
+
+        if descriptors[var].attr == 'INTERNAL':
+            walk(descriptors, var, level + 1, list)
+
+    return 0
 
 def update_level(descriptors):
     i = 0;
-    level = 0;
 
     while i < len(descriptors):
 
-        if descriptors[i].attr != 'PI':
-            descriptors[i].level = get_level(descriptors, i)
+        list = []
+
+        if descriptors[i].attr == 'PI':
+            descriptors[i].level = 0
+            walk(descriptors, i, 1, list)
 
         i = i + 1
 
 def main():
-    INFO = "Verilog code parser"
+    INFO    = "Verilog code parser"
     VERSION = pyverilog.utils.version.VERSION
-    USAGE = "Usage: python example_parser.py file ..."
+    USAGE   = "Usage: python example_parser.py file ..."
+
+    sys.setrecursionlimit(50000)
 
     def showVersion():
         print(INFO)

@@ -12,7 +12,7 @@ void create_verilog(const char* filename) {
 
   descr = (DESCRIPTOR*) malloc (sizeof(DESCRIPTOR));
 
-  char line[256];
+  char line[1024];
 
   n_descr = 0;
 
@@ -65,7 +65,7 @@ void create_verilog(const char* filename) {
     // write: descr->to_name
     pch = strtok(NULL, ";");
 
-    descr[i].to_name = (char*)(calloc(strlen(pch), sizeof(char)));
+    descr[i].to_name = (char*)(calloc(strlen(pch) + 1, sizeof(char)));
 
     strcpy(descr[i].to_name, pch);
 
@@ -77,21 +77,21 @@ void create_verilog(const char* filename) {
     // tmp: descr->to
     pch = strtok(NULL, ";");
 
-    to = (char*)(calloc(strlen(pch), sizeof(char)));
+    to = (char*)(calloc(strlen(pch) + 1, sizeof(char)));
 
     strcpy(to, pch);
 
     // write: descr->from
     pch = strtok(NULL, ";");
 
-    from = (char*)(calloc(strlen(pch), sizeof(char)));
+    from = (char*)(calloc(strlen(pch) + 1, sizeof(char)));
 
     strcpy(from, pch);
 
     // write: descr->name
     pch = strtok(NULL, ";");
 
-    descr[i].name = (char*)(calloc(strlen(pch), sizeof(char)));
+    descr[i].name = (char*)(calloc(strlen(pch) + 1, sizeof(char)));
 
     strcpy(descr[i].name, pch);
 
@@ -143,6 +143,10 @@ void create_verilog(const char* filename) {
 
       j = j + 1;
     }
+
+    free(to);
+    free(from);
+    free(pch);
   }
 
   fclose(file);
