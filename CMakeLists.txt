@@ -11,7 +11,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -g")
 
 include_directories(${CMAKE_MODULE_PATH}/src)
 
-add_library(${LIB_NAME} STATIC src/create_verilog.c)
+add_library(${LIB_NAME} STATIC src/create_verilog.c src/create_fau.c)
 set_property(TARGET ${LIB_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 file(GLOB SOURCES_TEST "src/main.c")
