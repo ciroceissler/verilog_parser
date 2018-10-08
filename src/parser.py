@@ -95,6 +95,32 @@ def calc_fan_recursive(tuple_verilog, conn, instance_str):
 
         calc_fan_recursive(var, conn, instance_str)
 
+def create_buffer(conn, pi, descriptors, mod):
+
+    for name in pi:
+
+        desc = Descriptor()
+
+        for net in conn:
+            if str(net) == name:
+                desc.to = conn[net][1]
+
+        desc.attr     = 'PI'
+        desc.type     = 'BUF'
+        desc.fanin    = 0
+        desc.fanout   = len(desc.to)
+        desc.to_name  = [str(name)]
+        desc.level    = 0
+
+        desc.fr0m     = []
+        desc.name     = str(name)
+        desc.ff_type  = 'FFD'
+        desc.gate_id  = gate_id()
+
+        mod[desc.name] = desc.gate_id
+
+        descriptors.append(desc)
+
 def recursive(tuple_verilog, conn, pi, po, descriptors, mod):
     for var in tuple_verilog.children():
 
@@ -129,16 +155,16 @@ def recursive(tuple_verilog, conn, pi, po, descriptors, mod):
                 input_ports = ['I', 'D', 'CK', 'RESET']
                 output_ports = ['O', 'Q']
 
-                if (str(port.argname) in pi):
-                    attr = 'PI'
-
                 if (str(port.argname) in po):
                     attr = 'PO'
 
                 if (any(map(port.portname.startswith, input_ports))):
                     fanin += 1
 
-                    fr0m.extend(conn[port.argname][2])
+                    if str(port.argname) in pi:
+                        fr0m.append(str(port.argname))
+                    else:
+                        fr0m.extend(conn[port.argname][2])
 
                 if (any(map(port.portname.startswith, output_ports))):
                     fanout = conn[port.argname][0] - 1
@@ -260,6 +286,8 @@ def main():
     calc_fan_recursive(ast, conn, '')
 
     descriptors = []
+
+    create_buffer(conn, pi, descriptors, mod)
 
     recursive(ast, conn, pi, po, descriptors, mod)
 
