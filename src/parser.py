@@ -18,7 +18,7 @@ class Descriptor:
     fanin     = 0
     fanout   = 0
     to_name  = []
-    level    = 0
+    level    = -1
     to       = []
     fr0m     = []
     name     = ''
@@ -221,7 +221,10 @@ def walk(descriptors, index, level, list):
     list.append(index)
 
     for var in descriptors[index].to:
-        if level > descriptors[var].level:
+        if descriptors[var].type == 'FF':
+            level = 0
+            descriptors[var].level = 0
+        elif level != -1 and level > descriptors[var].level:
             descriptors[var].level = level
 
         if descriptors[var].attr == 'INTERNAL':
